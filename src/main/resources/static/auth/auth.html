@@ -1,0 +1,84 @@
+
+<body ng-app="app-front">
+
+<!--<div class="container" ng-controller="storeController">-->
+<!--<div id="wrapper" ng-controller="authProductController">-->
+<div id="container-main" ng-controller="authProductController">
+<!--    <div class="user-icon"></div>-->
+<!--    <div class="pass-icon"></div>-->
+<form name="login-form" class="login-form" action="" >
+    <div class="header-auth">
+		<h1>Авторизация</h1>
+    </div>
+
+    <div class="content-auth">
+        <input id="navLoginField" class="input username" ng-model="user.username" type="text"
+               onfocus="this.value=''" placeholder="Введите Ваш логин..." required>
+
+        <input id="navPasswordField" class="input password" ng-model="user.password" type="password"
+                onfocus="this.value=''" placeholder="Введите Ваш пароль..." required>
+
+		<input id="navEmailField"  type="email" class="input email" ng-model="user.email"
+               onfocus="this.value=''" placeholder="Введите Ваш email адрес..." required/>
+
+<!--		<input name="password" type="password" class="input password" value="Пароль" onfocus="this.value=''" />-->
+    </div>
+
+    <div class="footer-auth">
+<!--        <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"-->
+<!--                type="submit" >Войти</button>-->
+
+		<input type="submit" name="submit" value="Регистрация" class="button" ng-click="tryToReg()"/>
+        <input type="submit" name="submit" value="Войти" class="button" ng-click="tryToAuth()" />
+    </div>
+
+</form>
+</div>
+</body>
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <link rel="stylesheet" href="style.css" media="screen" type="text/css" />-->
+<!--    <link rel="icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">-->
+<!--    <link rel="shortcut icon" href="http://vladmaxi.net/favicon.ico" type="image/x-icon">-->
+<!--</head>-->
+
+<!--<body>-->
+
+
+<!--<div id="login">-->
+<!--    <div class="flip">-->
+<!--        <div class="form-signup">-->
+<!--            <h1>Регистрация</h1>-->
+<!--            <fieldset>-->
+<!--                <p class="login-msg"></p>-->
+<!--                <form>-->
+<!--                    <input type="email" placeholder="Введите Ваш email адрес..." required />-->
+<!--                    <input type="password" placeholder="Ваш сложный пароль..." required />-->
+<!--                    <input type="text" placeholder="Имя пользователя" required />-->
+<!--                    <input type="submit" value="Зарегистрироваться" />-->
+<!--                </form>-->
+<!--&lt;!&ndash;                <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p>&ndash;&gt;-->
+<!--                <a href="#" class="flipper">Уже зарегистрированы? Войти.</a>-->
+<!--            </fieldset>-->
+<!--        </div>-->
+<!--        <div class="form-login">-->
+<!--            <h1>Авторизация</h1>-->
+<!--            <fieldset>-->
+<!--                <form>-->
+<!--                    <input type="email" placeholder="Логин или Email" required />-->
+<!--                    <input type="password" placeholder="Пароль" required />-->
+<!--                    <input type="submit" value="ВОЙТИ" />-->
+<!--                </form>-->
+<!--&lt;!&ndash;                <p>Войти через: <span class="social fb">Facebook</span> <span class="social gp">Google +</span></p>&ndash;&gt;-->
+<!--                <p><a href="#" class="flipper">Нет аккаунта? Регистрация.</a><br>-->
+<!--                    <a href="#">Забыли пароль?</a></p>-->
+<!--            </fieldset>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash;<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="js/index.js"></script>&ndash;&gt;-->
+
+<!--</body>-->

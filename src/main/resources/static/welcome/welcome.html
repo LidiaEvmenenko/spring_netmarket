@@ -1,0 +1,12 @@
+<!--<body ng-app="app-front">-->
+<div class="main" ng-app="app-front" ng-controller="welcomeController">
+   <div class="container-main"  align="center">
+      <div class="block-welcome">
+         <span>Мы рады приветствовать в нашем интернет-магазине.</span><br>
+         <span ng-show="!isUserLoggedIn()">Если у вас есть логин и пароль, войдите.</span><br>
+         <span ng-show="!isUserLoggedIn()">Если нет, зарегистрируйтесь </span>
+         <a href="#!/auth" ng-show="!isUserLoggedIn()">здесь.</a>
+      </div>
+   </div>
+</div>
+<!--</body>-->
