@@ -1,9 +1,9 @@
 package home11.services;
 
-import home11.dto.ProductDto;
+import home11.entity.Category;
+import home11.entity.Product;
 import home11.exceptions.ResourceNotFoundException;
-import home11.model.Category;
-import home11.model.Product;
+import home11.model.ProductDto;
 import home11.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,6 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
-  //  private final Cart cart;
 
     public Page<Product> findAll(int pageIndex, int pageSize){
         return productRepository.findAll(PageRequest.of(pageIndex, pageSize));
@@ -34,25 +33,6 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-//    @Transactional
-//    public Product save(Product product){
-//        return productRepository.save(product);
-//    }
-@Transactional
-public void save(ProductDto productDto){
-    Optional<Category> category = categoryService.findByTitle(productDto.getCategoryTitle());
-    if (category.isEmpty()) {
-        productRepository.insertProduct(productDto.getTitle(), productDto.getPrice(), 1L);
-    }else {
-        productRepository.insertProduct(productDto.getTitle(), productDto.getPrice(),
-                category.get().getId());
-    }
-
-}
-
-    //    public List<Product> findByPriceBetween(int minPrice, int maxPrice){
-//        return productRepository.findQ(minPrice, maxPrice);
-//    }
     public void deleteById(Long id){
         productRepository.deleteById(id);
     }
@@ -67,10 +47,7 @@ public void save(ProductDto productDto){
 
     @Transactional
     public void updateProduct(ProductDto productDto){
-     //   Product product = findByIdFromUpdate(productDto.getId());
         Product product = findById(productDto.getId()).get();
-        //   product.setId(productDto.getId());
-
         product.setTitle(productDto.getTitle());
         product.setPrice(productDto.getPrice());
         Category category = categoryService.findByTitle(productDto
@@ -80,9 +57,4 @@ public void save(ProductDto productDto){
 
     }
 
-
-
-  //  public List<ProductDto> findAllToCart(){
-//        return cart.getProductCart();
-//    }
 }

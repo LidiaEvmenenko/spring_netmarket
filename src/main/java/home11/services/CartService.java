@@ -1,7 +1,10 @@
 package home11.services;
 
-import home11.dto.ProductDto;
-import home11.model.Cart;
+import home11.entity.Cart;
+import home11.entity.User;
+import home11.mapper.cart.CartMapper;
+import home11.model.CartDto;
+import home11.model.ProductDto;
 import home11.repositories.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,52 +13,94 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CartService {
     private final CartRepository cartRepository;
+    private final CartMapper cartMapper;
+    private final ProductService productService;
+    private final UserService userService;
 
-    public Page<Cart> findAll(int pageIndex, int pageSize){
+    public Page<Cart> findAll(int pageIndex, int pageSize) {
         return cartRepository.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
-    public void deleteById(Long id){
+    public void deleteById(Long id) {
         cartRepository.deleteById(id);
     }
 
-    public void deleteAll(){
-        cartRepository.deleteAll();
+    @Transactional
+    public void addNewProductToCart(ProductDto productDto, double amount) {
+        Optional<Cart> cartFind = cartRepository.findByUseridAndProductid(1L, productDto.getId());
+        if (cartFind.isEmpty()) {
+            cartRepository.insertCart(1L, productDto.getId(), amount);
+        } else {
+            cartFind.get().setAmount(amount);
+        }
+    }
+
+    public Double sumItogCart(Long id) {
+        List<Cart> carts = cartRepository.findAllByUserId(id);
+        Double sum = Double.valueOf(0);
+        if (!carts.isEmpty()) {
+            for (int i = 0; i < carts.size(); i++) {
+                CartDto cartDto = cartMapper.mapToDto(carts.get(i));
+                sum = sum + cartDto.getProductPrice() * cartDto.getAmount();
+            }
+            return sum;
+        }
+        return Double.valueOf(0);
+    }
+
+    public Double userBalance(Long id){
+        Optional<User> user = userService.findById(id);
+        if (user.isEmpty()) { return Double.valueOf(0);}
+        return user.get().getBalance();
+    }
+
+    public void userBuy(Long id, Double itog){
+        userService.updateUserBalance(id, itog);
     }
 
     @Transactional
-    public void addNewProductToCart(ProductDto productDto, int count){
-     //   List<Cart> carts = cartRepository.findAll();
-        Cart cart = cartRepository.findByTitle(productDto.getTitle());
-        if(cart == null) {
-            cartRepository.insertCart(productDto.getTitle(), productDto.getPrice(), count);
-//            cart = new Cart();
-//            Long newId = 1L;
-//            if (carts.size() != 0) {
-//                newId = carts.stream().mapToLong(Cart::getId).max().getAsLong() + 1;
-//            }
-//            cart.setId(newId);
-//            cart.setTitle(productDto.getTitle());
-//            cart.setPrice(productDto.getPrice());
-//            cart.setAmount(1);
-        }else {
-
-            cart.setAmount( cart.getAmount() + count);
-            cartRepository.save(cart);
+    public void incAmount(Long id){
+        Optional<Cart> cart = cartRepository.findById(id);
+        if (!cart.isEmpty()){
+            cartRepository.updateAmount(cart.get().getAmount() + 1, cart.get().getId());
         }
-
     }
-    public int sumItogCart(){
-        List<Cart> carts = cartRepository.findAll();
-        int sum = 0;
-        for (int i=0; i<carts.size(); i++){
-            sum = sum + carts.get(i).getPrice() * carts.get(i).getAmount();
+
+    @Transactional
+    public void subAmount(Long id){
+        Optional<Cart> cart = cartRepository.findById(id);
+        if (!cart.isEmpty()){
+            if (cart.get().getAmount() > 0) {
+                System.out.println("cart.get().getId() = "+cart.get().getId());
+                System.out.println("cart.get().getAmount() = "+cart.get().getAmount());
+                cartRepository.updateAmount(cart.get().getAmount() - 1, cart.get().getId());
+            }
         }
-        return sum;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

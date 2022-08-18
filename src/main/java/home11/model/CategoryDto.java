@@ -1,6 +1,6 @@
-package home11.dto;
+package home11.model;
 
-import home11.model.Category;
+import home11.entity.Category;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

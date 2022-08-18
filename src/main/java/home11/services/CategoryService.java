@@ -1,6 +1,6 @@
 package home11.services;
 
-import home11.model.Category;
+import home11.entity.Category;
 import home11.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
