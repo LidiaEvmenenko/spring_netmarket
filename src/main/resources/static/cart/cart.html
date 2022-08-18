@@ -12,6 +12,8 @@
             <th>Название</th>
             <th>Цена</th>
             <th>Количество</th>
+            <th></th>
+            <th></th>
             <th>Сумма</th>
             <th></th>
 
@@ -21,9 +23,15 @@
 
         <tr ng-repeat="p in productsCart.content" bgcolor="ghostwhite">
 
-            <td>{{p.title}}</td>
-            <td>{{p.price}}</td>
+            <td>{{p.productTitle}}</td>
+            <td>{{p.productPrice}}</td>
             <td>{{p.amount}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="incAmount(p)" >+</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" ng-click="subAmount(p)" >-</button>
+            </td>
             <td>{{p.price * p.amount}}</td>
             <td>
                 <button type="button" class="btn btn-primary" ng-click="deleteProduct(p.id)" >Удалить</button>
@@ -39,7 +47,7 @@
         </tr>
     </table>
     <p></p>
-    <button type="button" class="btn btn-primary" ng-click="deleteProductAll()" >Оплатить</button>
+    <button type="button" class="btn btn-primary" ng-click="deleteProductAll()" >Купить</button>
     <p></p>
     <nav aria-label="Page navigation example">
         <ul class="pagination">

@@ -1,17 +1,18 @@
 angular.module('app-front').controller('cartProductController', function ($scope, $http, $location) {
-    const contextPath = 'http://localhost:8189/app/api/v1/';
+    const contextPath = 'http://localhost:8189/app/api/v1/cart';
 let a;
 let totalPagesCart;
+let itog;
+let idUser= null;
   $scope.loadProducts = function(pageIndex = 1){
                currentPageIndex = pageIndex;
                $http({
-               url: contextPath + 'products/cart',
+               url: contextPath,
                method: 'GET',
               params: {
              p: pageIndex
            }
        }).then(function(response) {
-            console.log(response);
           $scope.productsCart = response.data;
           a = response.data.content;
           totalPagesCart = $scope.productsCart.totalPages;
@@ -20,7 +21,7 @@ let totalPagesCart;
         });
   }
  $scope.itog = function(){
-       $http.get(contextPath + 'products/cart/sum')
+       $http.get(contextPath + '/sum')
           .then(function successCallback(response) {
            console.log(response.data);
            if(currentPageIndex == totalPagesCart && response.data != 0){
@@ -35,7 +36,7 @@ let totalPagesCart;
  }
 
      $scope.deleteProduct = function (productId) {
-         $http.delete(contextPath + 'products/cart/'+ productId)
+         $http.delete(contextPath + '/'+ productId)
                      .then(function successCallback(response) {
                          $scope.productsCart = response.data;
                          $scope.loadProducts(currentPageIndex);
@@ -45,7 +46,7 @@ let totalPagesCart;
      }
 
      $scope.deleteProductAll = function() {
-      $http.delete(contextPath + 'products/cart')
+      $http.delete(contextPath)
                           .then(function successCallback(response) {
                               $scope.productsCart = response.data;
                                $location.path('store');
@@ -80,6 +81,61 @@ let totalPagesCart;
                      $scope.loadProducts(currentPageIndex);
       }
 
+      $scope.incAmount = function(product){
+               $http.get(contextPath + '/inc/' + product.id)
+                         .then(function successCallback(response) {
+                          $scope.loadProducts();
+                    }, function failCallback(response) {
+
+                      });
+            }
+            $scope.subAmount = function(product){
+                     $http.get(contextPath + '/sub/' + product.id)
+                               .then(function successCallback(response) {
+                                $scope.loadProducts();
+                          }, function failCallback(response) {
+
+                            });
+                  }
+         $scope.buyProductAll = function(){
+            $http.get(contextPath + '/balance/' + $scope.productsCart.content.userId)
+                 .then(function successCallback(response) {
+                 if (response.data < itog){
+                    alert("Для оплаты не хватает средств.")
+                 }else{
+                    $http.get(contextPath + '/buy/' + $scope.productsCart.content.userId + itog)
+                              .then(function successCallback(response) {
+                              alert("Поздравляем. Вы совершили покупку!");
+                              }, function failCallback(response) {
+                                      alert(alert("Покупка не прошла."));
+                                                     });
+                 }
+
+                 }, function failCallback(response) {
+                        alert("Не читается баланс покупателя."+response.data);
+                                        });
+                 }
+
       $scope.loadProducts();
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 package home11.services;
 
-import home11.model.Role;
+import home11.entity.Role;
 import home11.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
