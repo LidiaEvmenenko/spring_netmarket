@@ -15,19 +15,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "update Users set balance = :balance where id = :id",
             nativeQuery = true)
     void updateUserBalance(@Param("balance") Double balance, @Param("id") Long id);
-//    Optional<User> findByUsername(String username);
-//    List<User> findAll();
-//
-//    @Modifying
-//    @Query(value = "insert into users_roles (user_id, role_id) values(:user_id, :role_id)",
-//    nativeQuery = true)
-//    void insertQ(@Param("user_id") Long user_id, @Param("role_id") Long role_id);
-//
-//    @Override
-//    <S extends User> S saveAndFlush(S entity);
-//
-//    @Modifying
-//    @Query(value = "insert into users (username, password, email) values(:username, :password, :email)",
-//            nativeQuery = true)
-//    void insertU(@Param("username") String username, @Param("password") String password, @Param("email") String email);
+
 }

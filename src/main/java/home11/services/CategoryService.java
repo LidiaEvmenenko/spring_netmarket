@@ -4,6 +4,7 @@ import home11.entity.Category;
 import home11.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,11 @@ public class CategoryService {
 
     public List<Category> findAll(){
         return categoryRepository.findAll();
+    }
+
+    @Transactional
+    public void create(String title) {
+        categoryRepository.insertCategory(title);
     }
 }
 
