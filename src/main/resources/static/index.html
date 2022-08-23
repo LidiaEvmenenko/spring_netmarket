@@ -28,10 +28,6 @@
        <div class="container-main" >
           <div class="block-menu-main">
              <div class="block-menu-left" ></div>
-<!--    <nav class="navbar navbar-expand-lg bg-light">-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="collapse navbar-collapse" id="navbarNav">-->
-<!--                <ul class="navbar-nav">-->
              <ul class="block-menu">
                     <li class="menu-item">
 <!--                        <a class="nav-link active" aria-current="page" href="#!/"> Главная </a>-->
@@ -49,6 +45,10 @@
 <!--                        <a class="nav-link" href="#!/cart"> Корзина </a>-->
                         <a class="nav-link" href="#!/cart"> Корзина </a>
                     </li>
+                 <li class="menu-item" ng-show="isUserLoggedIn()">
+                     <!--                        <a class="nav-link" href="#!/cart"> Корзина </a>-->
+                     <a class="nav-link" href="#!/statistic"> Статистика </a>
+                 </li>
                     <li class="menu-item" ng-show="!isUserLoggedIn()">
 <!--                        <a class="nav-link" href="#!/auth" > Вход </a>-->
                         <a class="nav-link" href="#!/auth" > Вход </a>
@@ -97,6 +97,7 @@
     <script src="create_product/create_product.js"></script>
     <script src="cart/cart.js"></script>
     <script src="auth/auth.js"></script>
+    <script src="statistic/statistic.js"></script>
 
 
 </div>
