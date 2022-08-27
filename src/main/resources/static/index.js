@@ -47,6 +47,47 @@ angular.module('app-front').controller('indexController', function ($rootScope, 
     const contextPath = 'http://localhost:8189/app/api/v1/';
 
 var aaa = document.getElementById("userName");
+var stompClient = null;
+
+window.onload = function() {
+connect();
+}
+window.onclose = function() {
+disconnect();
+}
+function setConnected(connected){
+   if(connected){
+      $("#conversation").show();
+   }else{
+      $("#conversation").hide();
+   }
+   $("#greetings").html("");
+}
+function connect(){
+   var socket = new SockJS('/gs-guide-websocket');
+   stompClient = Stomp.over(socket);
+   stompClient.connect({}, function(frame) {
+   setConnected(true);
+   stompClient.subscribe('/topic/greetings', function(greeting){
+      showGreeting(JSON.parse(greeting.body).content);
+   });
+   });
+}
+function showGreeting(message){
+    let a = 'http://';
+    for(let i=0; i<message.length-1; i++){
+       a += message[i] + '/';
+    }
+    a += message[message.length-1];
+   $("#greetings").append("<tr><td>" + a + "</td></tr>");
+}
+
+function disconnect(){
+   if (stompClient != null){
+      stompClient.disconnect();
+   }
+   setConnected(false);
+}
 
    $scope.tryToAuth = function () {
 

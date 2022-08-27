@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная страница</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -14,6 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
 <!--    локальное хранилище-->
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 
 </head>
 <div class="main" ng-app="app-front" ng-controller="indexController">
@@ -30,31 +35,24 @@
              <div class="block-menu-left" ></div>
              <ul class="block-menu">
                     <li class="menu-item">
-<!--                        <a class="nav-link active" aria-current="page" href="#!/"> Главная </a>-->
                         <a class="nav-link active" aria-current="page" href="#!/"> Главная </a>
                     </li>
                     <li class="menu-item" ng-show="isUserLoggedIn()">
-<!--                        <a class="nav-link" href="#!/store"> Каталог продуктов </a>-->
                         <a class="nav-link" href="#!/store"> Каталог продуктов </a>
                     </li>
                     <li class="menu-item" ng-show="isUserLoggedIn()">
-<!--                        <a class="nav-link" href="#!/create_product"> Добавить товар(техн) </a>-->
                         <a class="nav-link" href="#!/create_product"> Добавить товар </a>
                     </li>
                     <li class="menu-item" ng-show="isUserLoggedIn()">
-<!--                        <a class="nav-link" href="#!/cart"> Корзина </a>-->
                         <a class="nav-link" href="#!/cart"> Корзина </a>
                     </li>
                  <li class="menu-item" ng-show="isUserLoggedIn()">
-                     <!--                        <a class="nav-link" href="#!/cart"> Корзина </a>-->
                      <a class="nav-link" href="#!/statistic"> Статистика </a>
                  </li>
                     <li class="menu-item" ng-show="!isUserLoggedIn()">
-<!--                        <a class="nav-link" href="#!/auth" > Вход </a>-->
                         <a class="nav-link" href="#!/auth" > Вход </a>
                     </li>
                     <li class="menu-item"  style="padding: 4px;" ng-show="isUserLoggedIn()">
-<!--                        <a class="nav-link" href="#" onclick="tryToLogout()"> Выйти </a>-->
                         <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()"> Выйти </button>
                     </li>
 
@@ -73,20 +71,28 @@
                             </div>
                         </form>
                     </li>
-<!--                    <li class="menu-item" id="userName" value=""></li>-->
              </ul>
              <div class="user111" >
                  <label  >Вы вошли с логином: </label>
                  <input class="inputUser" id="userName" value="" disabled></input>
              </div>
          </div>
-<!--        </div>-->
-<!--    </nav>-->
       </div>
     </div>
-<!--    <div class="footer-main">-->
-<!--       <div class="footer-container"><span class="sub">© Все права защищены</span></div>-->
-<!--    </div>-->
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Greetings</th>
+                </tr>
+                </thead>
+                <tbody id="greetings">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <ng-view></ng-view>
 
